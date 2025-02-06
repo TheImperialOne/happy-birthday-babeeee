@@ -1,4 +1,3 @@
-// Import the data to customize and insert them into page
 const fetchData = () => {
   fetch("customize.json")
     .then(data => data.json())
@@ -16,35 +15,20 @@ const fetchData = () => {
         }
 
         // Check if the iteration is over
-        // Run amimation if so
-        if ( dataArr.length === dataArr.indexOf(customData) + 1 ) {
+        // Run animation if so
+        if (dataArr.length === dataArr.indexOf(customData) + 1) {
+          playAudio();  // Play music before animation starts
           animationTimeline();
-        } 
+        }
       });
     });
 };
+
+// Function to play audio
 const playAudio = () => {
-    const audio = document.getElementById("birthdayAudio");
-    if (audio) {
-        audio.play().catch(() => {
-            const playButton = document.createElement("button");
-            playButton.innerText = "Play Music";
-            playButton.style.position = "absolute";
-            playButton.style.top = "10px";
-            playButton.style.left = "10px";
-            playButton.style.padding = "10px 15px";
-            playButton.style.fontSize = "16px";
-            playButton.style.cursor = "pointer";
-            document.body.appendChild(playButton);
-
-            playButton.addEventListener("click", () => {
-                audio.play();
-                playButton.remove();
-            });
-        });
-    }
+  const audio = document.getElementById("birthdayAudio");
+  audio.play().catch(error => console.log("Autoplay blocked:", error));
 };
-
 // Animation Timeline
 const animationTimeline = () => {
   // Spit chars that needs to be animated individually
@@ -321,6 +305,12 @@ const animationTimeline = () => {
   replyBtn.addEventListener("click", () => {
     tl.restart();
   });
+    // Force Play Audio After User Clicks Anywhere
+    document.addEventListener("click", () => {
+        const audio = document.getElementById("birthdayAudio");
+        audio.play().catch(error => console.log("Autoplay blocked:", error));
+    }, { once: true });  // Ensures it runs only once
+
 };
 
 // Run fetch and animation in sequence
