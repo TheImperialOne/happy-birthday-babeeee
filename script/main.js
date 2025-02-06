@@ -23,6 +23,27 @@ const fetchData = () => {
       });
     });
 };
+const playAudio = () => {
+    const audio = document.getElementById("birthdayAudio");
+    if (audio) {
+        audio.play().catch(() => {
+            const playButton = document.createElement("button");
+            playButton.innerText = "Play Music";
+            playButton.style.position = "absolute";
+            playButton.style.top = "10px";
+            playButton.style.left = "10px";
+            playButton.style.padding = "10px 15px";
+            playButton.style.fontSize = "16px";
+            playButton.style.cursor = "pointer";
+            document.body.appendChild(playButton);
+
+            playButton.addEventListener("click", () => {
+                audio.play();
+                playButton.remove();
+            });
+        });
+    }
+};
 
 // Animation Timeline
 const animationTimeline = () => {
@@ -304,3 +325,4 @@ const animationTimeline = () => {
 
 // Run fetch and animation in sequence
 fetchData();
+playAudio();
