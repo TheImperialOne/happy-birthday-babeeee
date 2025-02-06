@@ -1,33 +1,33 @@
 const fetchData = () => {
-  fetch("customize.json")
-    .then(data => data.json())
-    .then(data => {
-      dataArr = Object.keys(data);
-      dataArr.map(customData => {
-        if (data[customData] !== "") {
-          if (customData === "imagePath") {
-            document
-              .querySelector(`[data-node-name*="${customData}"]`)
-              .setAttribute("src", data[customData]);
-          } else {
-            document.querySelector(`[data-node-name*="${customData}"]`).innerText = data[customData];
-          }
-        }
+    fetch("customize.json")
+        .then(data => data.json())
+        .then(data => {
+            dataArr = Object.keys(data);
+            dataArr.map(customData => {
+                if (data[customData] !== "") {
+                    if (customData === "imagePath") {
+                        document
+                            .querySelector(`[data-node-name*="${customData}"]`)
+                            .setAttribute("src", data[customData]);
+                    } else {
+                        document.querySelector(`[data-node-name*="${customData}"]`).innerText = data[customData];
+                    }
+                }
 
-        // Check if the iteration is over
-        // Run animation if so
-        if (dataArr.length === dataArr.indexOf(customData) + 1) {
-          playAudio();  // Play music before animation starts
-          animationTimeline();
-        }
-      });
-    });
+                // Check if the iteration is over
+                // Run animation if so
+                if (dataArr.length === dataArr.indexOf(customData) + 1) {
+                    playAudio();  // Play music before animation starts
+                    animationTimeline();
+                }
+            });
+        });
 };
 
 // Function to play audio
 const playAudio = () => {
-  const audio = document.getElementById("birthdayAudio");
-  audio.play().catch(error => console.log("Autoplay blocked:", error));
+    const audio = document.getElementById("birthdayAudio");
+    audio.play().catch(error => console.log("Autoplay blocked:", error));
 };
 // Animation Timeline
 const animationTimeline = () => {
@@ -306,13 +306,12 @@ const animationTimeline = () => {
     tl.restart();
   });
     // Force Play Audio After User Clicks Anywhere
-    document.addEventListener("click", () => {
+    document.addEventListener('click', () => {
         const audio = document.getElementById("birthdayAudio");
         audio.play().catch(error => console.log("Autoplay blocked:", error));
-    }, { once: true });  // Ensures it runs only once
+    }, { once: true });
 
 };
 
 // Run fetch and animation in sequence
 fetchData();
-playAudio();
